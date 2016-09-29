@@ -8,7 +8,7 @@ def is_valid_postcode(pc, extra_postcodes=()):
     inward = 'ABDEFGHJLNPQRSTUWXYZ'
     fst = 'ABCDEFGHIJKLMNOPRSTUWYZ'
     sec = 'ABCDEFGHKLMNOPQRSTUVWXY'
-    thd = 'ABCDEFGHJKSTUW'
+    thd = 'ABCDEFGHJKPSTUW'
     fth = 'ABEHMNPRVWXY'
 
     if re.match('[%s][1-9]\d[%s][%s]$' % (fst, inward, inward), pc) or \
