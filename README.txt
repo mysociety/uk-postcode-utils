@@ -14,6 +14,6 @@ data. Typical usage often looks like this::
 
 Contributors
 ============
-Matthew Somerville
-Louise Crow
-Andy Gimblett
+- Matthew Somerville
+- Louise Crow
+- Andy Gimblett

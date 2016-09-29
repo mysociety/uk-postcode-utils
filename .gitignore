@@ -1,2 +1,4 @@
 *.pyc
-dist/*
+/dist/
+/build/
+/uk_postcode_utils.egg-info/
