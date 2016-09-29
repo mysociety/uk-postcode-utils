@@ -1,42 +1,40 @@
+from functools import partial
 import re
 
-def is_valid_postcode(pc, extra_postcodes=()):
+PARTS = {
+    'fst': 'ABCDEFGHIJKLMNOPRSTUWYZ',
+    'sec': 'ABCDEFGHKLMNOPQRSTUVWXY',
+    'thd': 'ABCDEFGHJKPSTUW',
+    'fth': 'ABEHMNPRVWXY',
+    'inward': 'ABDEFGHJLNPQRSTUWXYZ',
+}
 
-    if pc in extra_postcodes: return True
+FULL_MATCH_REGEX = re.compile('|'.join([r.format(**PARTS) for r in (
+    '^[{fst}][1-9]\d[{inward}][{inward}]$',
+    '^[{fst}][1-9]\d\d[{inward}][{inward}]$',
+    '^[{fst}][{sec}]\d\d[{inward}][{inward}]$',
+    '^[{fst}][{sec}][1-9]\d\d[{inward}][{inward}]$',
+    '^[{fst}][1-9][{thd}]\d[{inward}][{inward}]$',
+    '^[{fst}][{sec}][1-9][{fth}]\d[{inward}][{inward}]$',
+)]))
 
-    # See http://www.govtalk.gov.uk/gdsc/html/noframes/PostCode-2-1-Release.htm
-    inward = 'ABDEFGHJLNPQRSTUWXYZ'
-    fst = 'ABCDEFGHIJKLMNOPRSTUWYZ'
-    sec = 'ABCDEFGHKLMNOPQRSTUVWXY'
-    thd = 'ABCDEFGHJKPSTUW'
-    fth = 'ABEHMNPRVWXY'
+PARTIAL_MATCH_REGEX = re.compile('|'.join([r.format(**PARTS) for r in (
+    '^[{fst}][1-9]$',
+    '^[{fst}][1-9]\d$',
+    '^[{fst}][{sec}]\d$',
+    '^[{fst}][{sec}][1-9]\d$',
+    '^[{fst}][1-9][{thd}]$',
+    '^[{fst}][{sec}][1-9][{fth}]$',
+)]))
 
-    if re.match('[%s][1-9]\d[%s][%s]$' % (fst, inward, inward), pc) or \
-        re.match('[%s][1-9]\d\d[%s][%s]$' % (fst, inward, inward), pc) or \
-        re.match('[%s][%s]\d\d[%s][%s]$' % (fst, sec, inward, inward), pc) or \
-        re.match('[%s][%s][1-9]\d\d[%s][%s]$' % (fst, sec, inward, inward), pc) or \
-        re.match('[%s][1-9][%s]\d[%s][%s]$' % (fst, thd, inward, inward), pc) or \
-        re.match('[%s][%s][1-9][%s]\d[%s][%s]$' % (fst, sec, fth, inward, inward), pc):
+del PARTS
+
+
+def _match_postcode(regex, pc, extra_postcodes=()):
+    if pc in extra_postcodes:
         return True
+    return regex.match(pc) is not None
 
-    return False
 
-def is_valid_partial_postcode(pc, extra_postcodes=()):
-
-    if pc in extra_postcodes: return True
-
-    # See http://www.govtalk.gov.uk/gdsc/html/noframes/PostCode-2-1-Release.htm
-    fst = 'ABCDEFGHIJKLMNOPRSTUWYZ'
-    sec = 'ABCDEFGHKLMNOPQRSTUVWXY'
-    thd = 'ABCDEFGHJKSTUW'
-    fth = 'ABEHMNPRVWXY'
-
-    if re.match('[%s][1-9]$' % (fst), pc) or \
-        re.match('[%s][1-9]\d$' % (fst), pc) or \
-        re.match('[%s][%s]\d$' % (fst, sec), pc) or \
-        re.match('[%s][%s][1-9]\d$' % (fst, sec), pc) or \
-        re.match('[%s][1-9][%s]$' % (fst, thd), pc) or \
-        re.match('[%s][%s][1-9][%s]$' % (fst, sec, fth), pc):
-        return True
-
-    return False
+is_valid_postcode = partial(_match_postcode, FULL_MATCH_REGEX)
+is_valid_partial_postcode = partial(_match_postcode, PARTIAL_MATCH_REGEX)
