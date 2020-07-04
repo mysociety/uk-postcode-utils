@@ -10,21 +10,21 @@ PARTS = {
 }
 
 FULL_MATCH_REGEX = re.compile('|'.join([r.format(**PARTS) for r in (
-    '^[{fst}][1-9]\d[{inward}][{inward}]$',
-    '^[{fst}][1-9]\d\d[{inward}][{inward}]$',
-    '^[{fst}][{sec}]\d\d[{inward}][{inward}]$',
-    '^[{fst}][{sec}][1-9]\d\d[{inward}][{inward}]$',
-    '^[{fst}][1-9][{thd}]\d[{inward}][{inward}]$',
-    '^[{fst}][{sec}][1-9][{fth}]\d[{inward}][{inward}]$',
+    r'^[{fst}][1-9]\d[{inward}][{inward}]$',
+    r'^[{fst}][1-9]\d\d[{inward}][{inward}]$',
+    r'^[{fst}][{sec}]\d\d[{inward}][{inward}]$',
+    r'^[{fst}][{sec}][1-9]\d\d[{inward}][{inward}]$',
+    r'^[{fst}][1-9][{thd}]\d[{inward}][{inward}]$',
+    r'^[{fst}][{sec}][1-9][{fth}]\d[{inward}][{inward}]$',
 )]))
 
 PARTIAL_MATCH_REGEX = re.compile('|'.join([r.format(**PARTS) for r in (
-    '^[{fst}][1-9]$',
-    '^[{fst}][1-9]\d$',
-    '^[{fst}][{sec}]\d$',
-    '^[{fst}][{sec}][1-9]\d$',
-    '^[{fst}][1-9][{thd}]$',
-    '^[{fst}][{sec}][1-9][{fth}]$',
+    r'^[{fst}][1-9]$',
+    r'^[{fst}][1-9]\d$',
+    r'^[{fst}][{sec}]\d$',
+    r'^[{fst}][{sec}][1-9]\d$',
+    r'^[{fst}][1-9][{thd}]$',
+    r'^[{fst}][{sec}][1-9][{fth}]$',
 )]))
 
 del PARTS
