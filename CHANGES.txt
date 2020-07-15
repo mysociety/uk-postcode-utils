@@ -1,1 +1,10 @@
+v1.1, 2020-07-15
+    - Make re strings into raw strings to avoid DeprecationWarnings. Resolves #4.
+
+v1.0, 2016-09-29
+    - Add P to thd; test random sample of 10k postcodes.
+    - Compiled (single) regex rather than chain of ORs.
+    - Include changes so that we can e.g. bdist_wheel.
+
 v0.1.0, 2013-01-31 -- Initial release.
+    - Initial release.

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='uk-postcode-utils',
-    version='1.0',
+    version='1.1',
     author='Matthew Somerville',
     author_email='matthew@mysociety.org',
     packages=['ukpostcodeutils', 'ukpostcodeutils.test'],
